@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="752.0" prefWidth="1126.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+   <children>
+      <ListView fx:id="conversationList" layoutX="315.0" prefHeight="752.0" prefWidth="811.0" />
+      <Button layoutX="71.0" layoutY="14.0" mnemonicParsing="false" onAction="#createConversation" text="Créer conversation">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <ListView fx:id="conversationSList" layoutX="-2.0" layoutY="59.0" prefHeight="694.0" prefWidth="317.0" />
+   </children>
+</AnchorPane>
