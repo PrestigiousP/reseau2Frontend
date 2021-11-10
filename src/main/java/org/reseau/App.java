@@ -57,4 +57,11 @@ public class App extends Application {
         App.user = user;
     }
 
+    public static User getUser(){
+        return user;
+    }
+    public static FXMLLoader getFxmlLoader(){
+        return fxmlLoader;
+    }
+
 }

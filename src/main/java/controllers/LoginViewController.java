@@ -28,6 +28,7 @@ public class LoginViewController {
 
     public void connect(){
         try{
+            System.out.println("connexion");
             // Prend la valeur écrite dans le champ
             String str = nameField.getText();
 
@@ -45,23 +46,10 @@ public class LoginViewController {
             // envoie la requête au serveur en format json
             out.println(jsonObj);
 
-            boolean waitForResponse = true;
-            String line;
-
-//            while(waitForResponse){
-//                while ((line = in.readLine()) != null) {
-//                    System.out.println("passe ici");
-//                    Request request1 = gson.fromJson(line, Request.class);
-//                    User user = new User(str);
-//                    user.setId(request1.getClientId());
-//                    App.setUser(user);
-//                    waitForResponse = false;
-//
-//                }
-//            }
-
             // Change de scène
-            App.setRoot("main_page");
+            //App.setRoot("main_page");
+
+            // out.close();
 
         }catch(IOException e){
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package org.reseau;
 
 import com.google.gson.Gson;
+import controllers.*;
 import models.Request;
 import models.User;
 
@@ -25,18 +26,33 @@ public class ClientThread extends Thread{
         try{
             while (true) {
                 String resp = input.readLine();
-                System.out.println("the resp is: "+resp);
+                // System.out.println("the resp is: "+resp);
                 Request response = gson.fromJson(resp, Request.class);
-                System.out.println("passed here, also response type is: "+response.getType());
-                System.out.println("passed here, also response id is: "+response.getClientId());
-                System.out.println("passed here, also response content is: "+response.getContent());
-
-                switch (response.getType()){
-                    case SEND_ID: {
-                        User user = new User(response.getContent());
-                        user.setId(response.getClientId());
-                        App.setUser(user);
-                        System.out.println(resp);
+                if(response != null){
+                    switch (response.getType()){
+                        case SEND_ID:
+                            User user = new User(response.getContent());
+                            user.setId(response.getClientId());
+                            App.setUser(user);
+                            // System.out.println(resp);
+                            break;
+                        case CONN_COMPLETE:
+                            User user1 = new User(response.getContent());
+                            user1.setId(response.getClientId());
+                            App.setUser(user1);
+                            System.out.println("user existe et connexion est complété "+resp);
+                            System.out.println("voici le user: "+App.getUser().getName() +" id: "+ App.getUser().getId());
+                            App.setRoot("main_page");
+                            break;
+                        case SEND_USERS:
+                            System.out.println("passe par ici " + response.getType());
+                            CreateConvPersonController createConvPersonController = App.getFxmlLoader().getController();
+                            createConvPersonController.initListView(response);
+                            break;
+                        case GET_CONV:
+                            MainController maincontroller = App.getFxmlLoader().getController();
+                            maincontroller.initListConv(response);
+                            break;
                     }
                 }
             }
