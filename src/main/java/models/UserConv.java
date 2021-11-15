@@ -5,10 +5,19 @@ import java.util.ArrayList;
 public class UserConv {
     private int user_id;
     private ArrayList<String> listUsers;
+    private ArrayList<Integer> listUsersId;
 
     public UserConv(int id){
         this.user_id = id;
         listUsers = new ArrayList<>();
+    }
+
+    public ArrayList<Integer> getListUsersId() {
+        return listUsersId;
+    }
+
+    public void setListUsersId(ArrayList<Integer> listUsersId) {
+        this.listUsersId = listUsersId;
     }
 
     public int getUser_id() {

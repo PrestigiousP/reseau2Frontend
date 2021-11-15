@@ -2,13 +2,16 @@ package controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.bind.ArrayTypeAdapter;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import models.Request;
 import models.User;
+import models.UserConv;
 import org.reseau.App;
 import org.reseau.SocketConnection;
 
@@ -33,12 +36,19 @@ public class CreateConvPersonController implements Initializable {
         System.out.println("resp: "+response.getListUsers());
         // arrUserList = response.getListUsers();
         response.getListUsers().forEach(u ->{
-            userList.getItems().add(u.getName());
+            if(!u.getName().equals(App.getUser().getName()) && !u.getName().equals("broadcast")){
+                userList.getItems().add(u.getName());
+            }
         });
     }
 
     public void createConversation() throws IOException {
-        Request request = new Request(Request.Type.CREATE_CONV_PERSON, App.getUser().getId(), 0, userList.getSelectionModel().getSelectedItem().toString());
+        Request request = new Request(Request.Type.CREATE_CONV_PERSON);
+        request.setClientId(App.getUser().getId());
+        userList.getSelectionModel().getSelectedItems().forEach(item -> {
+            request.addUsersNameList(item.toString());
+        });
+        // request.setContent(userList.getSelectionModel().getSelectedItem().toString());
 
         // Crée un objet permettant l'envoie de données au serveur
         PrintWriter out = new PrintWriter(SocketConnection.getSocketConn().getSocket().getOutputStream(), true);
@@ -50,7 +60,6 @@ public class CreateConvPersonController implements Initializable {
 
         // envoie la requête au serveur en format json
         out.println(jsonObj);
-
         App.setRoot("main_page");
     }
 
@@ -58,7 +67,10 @@ public class CreateConvPersonController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
-            Request request = new Request(Request.Type.GET_USERS, App.getUser().getId(), 0, "");
+            userList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+            Request request = new Request(Request.Type.GET_USERS);
+            request.setClientId(App.getUser().getId());
             // Crée un objet permettant l'envoie de données au serveur
             PrintWriter out = new PrintWriter(SocketConnection.getSocketConn().getSocket().getOutputStream(), true);
 
@@ -73,5 +85,9 @@ public class CreateConvPersonController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    public void returnMainView(ActionEvent actionEvent) throws IOException {
+        App.setRoot("main_page");
     }
 }

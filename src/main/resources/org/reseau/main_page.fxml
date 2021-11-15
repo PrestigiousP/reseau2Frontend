@@ -14,7 +14,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <TextField fx:id="chatTextField" layoutX="342.0" layoutY="734.0" prefHeight="30.0" prefWidth="633.0" />
+      <TextField fx:id="chatTextField" layoutX="342.0" layoutY="734.0" visible="false" onKeyPressed="#listenKeyPressed" prefHeight="30.0" prefWidth="633.0" />
       <ListView fx:id="conversationsList" layoutX="-2.0" layoutY="59.0" onMouseClicked="#openConversation" prefHeight="741.0" prefWidth="317.0" />
    </children>
 </AnchorPane>

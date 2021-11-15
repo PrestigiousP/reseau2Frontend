@@ -1,20 +1,12 @@
 package controllers;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+
 import javafx.scene.control.TextField;
 import models.Request;
-import models.User;
-import org.reseau.App;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class LoginViewController {
 
     private Socket socket;
@@ -33,7 +25,8 @@ public class LoginViewController {
             String str = nameField.getText();
 
             // Crée un objet Request
-            Request request = new Request(Request.Type.CONN, 0, 0, str);
+            Request request = new Request(Request.Type.CONN);
+            request.setContent(str);
 
             // Crée un objet permettant l'envoie de données au serveur
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
