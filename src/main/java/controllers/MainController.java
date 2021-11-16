@@ -117,26 +117,28 @@ public class MainController implements Initializable {
             System.out.println("clicked " + conversationsList.getSelectionModel().getSelectedItem());
             if(this.userConvList != null){
                 int index = conversationsList.getSelectionModel().getSelectedIndex();
-                UserConv userConv = userConvList.get(index);
-                // Crée un objet Request
-                Request request = new Request(Request.Type.GET_MESS);
-                request.setClientId(App.getUser().getId());
-                System.out.println("liste des users id: "+ userConv.getListUsersId());
-                request.setListUserConvId(userConv.getListUsersId());
-                listIds = userConv.getListUsersId();
+                if(index != -1){
+                    UserConv userConv = userConvList.get(index);
+                    // Crée un objet Request
+                    Request request = new Request(Request.Type.GET_MESS);
+                    request.setClientId(App.getUser().getId());
+                    System.out.println("liste des users id: "+ userConv.getListUsersId());
+                    request.setListUserConvId(userConv.getListUsersId());
+                    listIds = userConv.getListUsersId();
 
-                // Crée un objet permettant l'envoie de données au serveur
-                PrintWriter out = new PrintWriter(SocketConnection.getSocketConn().getSocket().getOutputStream(), true);
+                    // Crée un objet permettant l'envoie de données au serveur
+                    PrintWriter out = new PrintWriter(SocketConnection.getSocketConn().getSocket().getOutputStream(), true);
 
-                // Crée un objet permettant de pouvoir transformer les objets
-                // en json
-                Gson gson = new Gson();
-                String jsonObj = gson.toJson(request);
+                    // Crée un objet permettant de pouvoir transformer les objets
+                    // en json
+                    Gson gson = new Gson();
+                    String jsonObj = gson.toJson(request);
 
-                // envoie la requête au serveur en format json
-                out.println(jsonObj);
+                    // envoie la requête au serveur en format json
+                    out.println(jsonObj);
 
-                chatTextField.setVisible(true);
+                    chatTextField.setVisible(true);
+                }
             }
 
 

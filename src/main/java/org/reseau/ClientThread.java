@@ -73,10 +73,11 @@ public class ClientThread extends Thread {
                             });
                             break;
                         case CREATE_CONV_PERSON:
+                            System.out.println("reçus response avec: "+ response.getListUserConv().toString());
+                            System.out.println("et plus précis: " + response.getListUserConv().get(0).getListUsers().toString());
                             Platform.runLater(() -> {
                                 MainController mainController = App.getFxmlLoader().getController();
-                                response.getListUserConv().forEach(userConv -> mainController.getObservableUserConvList().add(userConv));
-                                // mainController.getObservableUserConvList().add(response.getListUserConv());
+                                mainController.getObservableUserConvList().add(response.getListUserConv().get(0));
                                 mainController.updateConversations();
                             });
                             break;
